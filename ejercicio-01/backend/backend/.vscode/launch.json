@@ -21,7 +21,7 @@
             },           
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "MONGO_URI": "mongodb://localhost:27017"
+                "MONGO_URI": "mongodb://mongoadmin:secret@localhost:27017"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
