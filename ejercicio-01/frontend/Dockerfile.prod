@@ -21,9 +21,9 @@ COPY --from=dependencies /usr/src/app/node_modules ./
 RUN npm install -g react-scripts --silent
 COPY . ./
 EXPOSE 80
-# RUN npm run build
+RUN npm run build
 
-# FROM nginx:1.17.1-alpine AS production
-# COPY --from=build /usr/src/app/build /usr/share/nginx/html
-# EXPOSE 3000
-# CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:1.19.4-alpine AS production
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
