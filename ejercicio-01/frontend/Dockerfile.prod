@@ -20,7 +20,6 @@ COPY --from=dependencies /usr/src/app/package.json ./
 COPY --from=dependencies /usr/src/app/node_modules ./
 RUN npm install -g react-scripts --silent
 COPY . ./
-EXPOSE 80
 RUN npm run build
 
 FROM nginx:1.19.4-alpine AS production
