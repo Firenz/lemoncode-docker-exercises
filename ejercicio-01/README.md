@@ -30,8 +30,8 @@
     ```
     $ cd backend/backend
     $ docker build -t backend-aspnet .
-    $ docker -d run --name api \
-    -p 5000:80 \
+    $ docker run -d --name api \
+    -p 5000:5000 \
     --network lemoncode-challenge \
     -e MONGO_URI=mongodb://database:27017  \
     backend-aspnet
@@ -46,7 +46,7 @@
     ```
     $ cd ../../frontend
     $ docker build -t frontend-react .
-    $ docker run -itd --name ui \
+    $ docker run --name ui \
     -p 3000:80 \
     -e REACT_APP_API_URL=https://localhost:5000/api/topics \
     frontend-react
