@@ -1,24 +1,24 @@
 FROM node:latest AS base
 WORKDIR /usr/src/app
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-# ---- Dependencies ----
 FROM base AS dependencies
-# Copy project dependencies file
-COPY package*.json ./
-#Install project dependencies
-RUN npm install
+WORKDIR /usr/src/app
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm install -g react-scripts --silent
+RUN npm install --silent
 
-# ---- Release ----
+# FROM dependencies AS test
+# COPY --from=dependencies /usr/src/app/package.json ./
+# COPY --from=dependencies /usr/src/app/node_modules ./
+# COPY . .
+# RUN npm run test
+
 FROM base AS release
-
-# copy node_modules
 COPY --from=dependencies /usr/src/app/package.json ./
-#Install app dependencies
-#RUN npm install --silent --production && mv node_modules ../
 COPY --from=dependencies /usr/src/app/node_modules ./
-# copy app sources
-COPY . .
-# expose port
+RUN npm install -g react-scripts --silent
+COPY . ./
 EXPOSE 80
-#define CMD specify what command it'll execute when you create a container
 CMD ["npm", "start"]
