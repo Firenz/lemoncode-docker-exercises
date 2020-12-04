@@ -30,10 +30,10 @@
     ```
     $ cd backend/backend
     $ docker build -t backend-aspnet .
-    $ docker run -d --name api \
-    -p 5000:5000 \
+    $ docker run -d --name backend \
     --network lemoncode-challenge \
-    -e MONGO_URI=mongodb://database:27017  \
+    -p 5000:80 \
+    -e MONGO_URI=database:27017  \
     backend-aspnet
     ```
 3. Para comprobar que hemos tenido éxito, comprobamos que existe el contenedor en la network de `lemoncode-challenge`:
@@ -46,13 +46,14 @@
     ```
     $ cd ../../frontend
     $ docker build -t frontend-react .
-    $ docker run --name ui \
+    $ docker run --name frontend \
+    --network lemoncode-challenge \
     -p 3000:80 \
     -e REACT_APP_API_URL=https://localhost:5000/api/topics \
     frontend-react
     ```
 2. Para comprobar que nuestro frontend está corriendo sin problemas, tenemos que averiguar su ip. El cual se puede obtener inspeccionando la red de `lemoncode-challenge` con los filtrados oportunos:
     ```
-    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ui
+    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' frontend
     ```
 3. Ponemos la IP obtenida en el navegador y debería salir la página funcionando.
