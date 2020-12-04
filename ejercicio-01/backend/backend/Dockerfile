@@ -9,5 +9,5 @@ RUN dotnet publish -c Release -o out
 
 FROM base AS runtime
 COPY --from=builder /app/out .
-EXPOSE 5000
+EXPOSE 80
 ENTRYPOINT ["dotnet", "backend.dll"]
